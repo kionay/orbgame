@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bc68wfm7yo26s"]
+[gd_scene load_steps=21 format=3 uid="uid://bc68wfm7yo26s"]
 
 [ext_resource type="Script" path="res://game.cs" id="1_aolqd"]
 [ext_resource type="PackedScene" uid="uid://deitymijtv8pf" path="res://background.tscn" id="1_jh7wj"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ki2u0hitem2s" path="res://Sprites/light_green.svg" id="11_jwe6e"]
 [ext_resource type="Texture2D" uid="uid://d27jwyrtafx3o" path="res://Sprites/arrow.svg" id="11_njxvx"]
 [ext_resource type="Texture2D" uid="uid://chva76gsbejr" path="res://Sprites/green.svg" id="12_hyoer"]
+[ext_resource type="Script" path="res://Orb.cs" id="13_t2fvd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nci2k"]
 friction = 0.8
@@ -215,3 +216,23 @@ position = Vector2(636, 79)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("11_njxvx")
 script = ExtResource("5_5bekf")
+
+[node name="orb" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2(52, 162.3)
+physics_material_override = SubResource("PhysicsMaterial_nci2k")
+gravity_scale = 0.0
+continuous_cd = 1
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("13_t2fvd")
+metadata/OrbName = "red"
+
+[node name="Collision" type="CollisionShape2D" parent="orb"]
+scale = Vector2(0.324, 0.324)
+shape = SubResource("CircleShape2D_vu5gg")
+
+[node name="Sprite" type="Sprite2D" parent="orb"]
+material = SubResource("CanvasItemMaterial_0vq88")
+scale = Vector2(0.324, 0.324)
+texture = ExtResource("6_1dftd")
