@@ -44,7 +44,7 @@ public partial class game : Node2D
 		spawnedOrb.SetCollisionLayerValue(2,  true);
 		spawnedOrb.SetCollisionMaskValue(1, false);
 		spawnedOrb.SetCollisionMaskValue(2, true);
-		
+		spawnedOrb.SetMeta("OrbName", "colorTag");
 		return spawnedOrb;
 	}
 
