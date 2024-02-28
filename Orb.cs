@@ -5,25 +5,22 @@ using System;
 public partial class Orb : RigidBody2D
 {
 	[Export]
-	private NodeType NodeType;
+	public NodeType NodeType;
 
 	public override void _Ready()
 	{
-		this.NodeType = GetMeta("OrbName")
-			.AsString()
-			.ToNodeType();
 		BodyEntered += ForwardCollision;
 		base._Ready();
 	}
 
 	private void ForwardCollision(Node body)
 	{
-		CallDeferred("CollidedEventHandler", body as Node2D);
+		CallDeferred("CollidedEventHandler", body as Orb);
 	}
 
-	public void CollidedEventHandler(Node2D body)
+	public void CollidedEventHandler(Orb body)
 	{
-		if((body as Orb).NodeType == this.NodeType)
+		if(body.NodeType == this.NodeType)
 		{
 			// if(this.IsConnected("body_entered", ForwardCollision))
 			// {

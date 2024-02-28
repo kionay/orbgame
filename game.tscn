@@ -1,27 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://bc68wfm7yo26s"]
+[gd_scene load_steps=14 format=3 uid="uid://bc68wfm7yo26s"]
 
 [ext_resource type="Script" path="res://game.cs" id="1_aolqd"]
 [ext_resource type="PackedScene" uid="uid://deitymijtv8pf" path="res://background.tscn" id="1_jh7wj"]
 [ext_resource type="Script" path="res://Arrow.cs" id="5_5bekf"]
-[ext_resource type="Script" path="res://OrbCollides.cs" id="5_6fh8r"]
 [ext_resource type="Texture2D" uid="uid://cwqm421e120jj" path="res://Sprites/red.svg" id="6_1dftd"]
-[ext_resource type="Texture2D" uid="uid://d0k487vftp2pa" path="res://Sprites/pink.svg" id="7_xdwac"]
-[ext_resource type="Texture2D" uid="uid://cxf8addma1ngj" path="res://Sprites/blue.svg" id="8_t6gem"]
-[ext_resource type="Texture2D" uid="uid://ccqbrd087m8wm" path="res://Sprites/orange.svg" id="9_i3fpr"]
-[ext_resource type="Texture2D" uid="uid://oq6okjy4a72o" path="res://Sprites/yellow.svg" id="10_27hwu"]
-[ext_resource type="Texture2D" uid="uid://ki2u0hitem2s" path="res://Sprites/light_green.svg" id="11_jwe6e"]
 [ext_resource type="Texture2D" uid="uid://d27jwyrtafx3o" path="res://Sprites/arrow.svg" id="11_njxvx"]
-[ext_resource type="Texture2D" uid="uid://chva76gsbejr" path="res://Sprites/green.svg" id="12_hyoer"]
 [ext_resource type="Script" path="res://Orb.cs" id="13_t2fvd"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nci2k"]
-friction = 0.8
-bounce = 0.05
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vu5gg"]
-radius = 37.4262
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0vq88"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0tet5"]
 
@@ -34,142 +18,19 @@ size = Vector2(118.235, 862.497)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjd5h"]
 size = Vector2(137.273, 875.657)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nci2k"]
+friction = 0.8
+bounce = 0.05
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vu5gg"]
+radius = 37.4262
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0vq88"]
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_aolqd")
 
 [node name="Background" parent="." instance=ExtResource("1_jh7wj")]
-
-[node name="red" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(26, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-continuous_cd = 1
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "red"
-
-[node name="Collision" type="CollisionShape2D" parent="red"]
-scale = Vector2(0.324, 0.324)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="red"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(0.324, 0.324)
-texture = ExtResource("6_1dftd")
-
-[node name="pink" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(79, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "pink"
-
-[node name="Collision" type="CollisionShape2D" parent="pink"]
-scale = Vector2(0.554, 0.554)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="pink"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(0.554, 0.554)
-texture = ExtResource("7_xdwac")
-
-[node name="blue" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(138, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "blue"
-
-[node name="Collision" type="CollisionShape2D" parent="blue"]
-scale = Vector2(0.797, 0.797)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="blue"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(0.797, 0.797)
-texture = ExtResource("8_t6gem")
-
-[node name="orange" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(224, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "orange"
-
-[node name="Collision" type="CollisionShape2D" parent="orange"]
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="orange"]
-material = SubResource("CanvasItemMaterial_0vq88")
-texture = ExtResource("9_i3fpr")
-
-[node name="yellow" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(333, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "yellow"
-
-[node name="Collision" type="CollisionShape2D" parent="yellow"]
-scale = Vector2(1.473, 1.473)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="yellow"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(1.473, 1.473)
-texture = ExtResource("10_27hwu")
-
-[node name="light_green" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(480, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "light_green"
-
-[node name="Collision" type="CollisionShape2D" parent="light_green"]
-scale = Vector2(1.797, 1.797)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="light_green"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(1.797, 1.797)
-texture = ExtResource("11_jwe6e")
-
-[node name="green" type="RigidBody2D" parent="."]
-visible = false
-position = Vector2(654, 81.15)
-physics_material_override = SubResource("PhysicsMaterial_nci2k")
-gravity_scale = 0.0
-max_contacts_reported = 5
-contact_monitor = true
-script = ExtResource("5_6fh8r")
-metadata/OrbName = "green"
-
-[node name="Collision" type="CollisionShape2D" parent="green"]
-scale = Vector2(1.986, 1.986)
-shape = SubResource("CircleShape2D_vu5gg")
-
-[node name="Sprite" type="Sprite2D" parent="green"]
-material = SubResource("CanvasItemMaterial_0vq88")
-scale = Vector2(1.986, 1.986)
-texture = ExtResource("12_hyoer")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(507.148, 350.663)
@@ -226,7 +87,6 @@ continuous_cd = 1
 max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("13_t2fvd")
-metadata/OrbName = "red"
 
 [node name="Collision" type="CollisionShape2D" parent="orb"]
 scale = Vector2(0.324, 0.324)
