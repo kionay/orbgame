@@ -10,7 +10,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0tet5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8tp7g"]
-size = Vector2(811.613, 841.238)
+size = Vector2(815.622, 846.3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_byvqm"]
 size = Vector2(118.235, 862.497)
@@ -40,7 +40,7 @@ collision_mask = 2
 physics_material_override = SubResource("PhysicsMaterial_0tet5")
 
 [node name="FloorCollider" type="CollisionShape2D" parent="Floor"]
-position = Vector2(128.106, 936.231)
+position = Vector2(130.111, 933.7)
 scale = Vector2(1, 0.999999)
 shape = SubResource("RectangleShape2D_8tp7g")
 

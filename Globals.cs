@@ -6,7 +6,7 @@ namespace Orbgame.Globals;
 
 public partial class Globals : Node
 {
-    public Dictionary<NodeType, float> NodeScales = new()
+    public static Dictionary<NodeType, float> NodeScales = new()
     {
         {NodeType.red, 0.324f},
         {NodeType.pink, 0.554f},
@@ -16,6 +16,7 @@ public partial class Globals : Node
         {NodeType.light_green, 1.797f},
         {NodeType.green, 1.986f},
     };
+
 }
 
 public enum NodeType
@@ -35,4 +36,6 @@ public static class GlobalExtensions
 
     public static string ToString(this NodeType nodeType) => Enum.GetName(nodeType);
     public static bool IsBiggestNodeType(this NodeType nodeType) => nodeType ==  Enum.GetValues<NodeType>()[^1];
+
+    public static CompressedTexture2D GetTexture(this NodeType nodeType) => ResourceLoader.Load<CompressedTexture2D>($"res://Sprites/{nodeType}.svg");
 }

@@ -46,6 +46,12 @@ public partial class game : Node2D
 		spawnedOrb.SetCollisionLayerValue(2,  true);
 		spawnedOrb.SetCollisionMaskValue(1, false);
 		spawnedOrb.SetCollisionMaskValue(2, true);
+		var nodeScaleFactor = Globals.NodeScales[nodeType];
+		var nodeScaleVector = new Vector2(nodeScaleFactor, nodeScaleFactor);
+		spawnedOrb.GetChild<CollisionShape2D>(0).Scale = nodeScaleVector;
+		var nodeSprite = spawnedOrb.GetChild<Sprite2D>(1);
+		nodeSprite.Texture = nodeType.GetTexture();
+		nodeSprite.Scale = nodeScaleVector;
 		return spawnedOrb;
 	}
 

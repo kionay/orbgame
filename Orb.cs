@@ -20,14 +20,10 @@ public partial class Orb : RigidBody2D
 
 	public void CollidedEventHandler(Orb body)
 	{
+		if(body is null)
+			return;
 		if(body.NodeType == this.NodeType)
 		{
-			// if(this.IsConnected("body_entered", ForwardCollision))
-			// {
-			// 	this.Disconnect("body_entered", ForwardCollision);
-			// 	BodyEntered -= ForwardCollision;
-			// }
-
 			GetParent()?.EmitSignal(game.SignalName.MergeSignal, this, body);
 		}
 	}
