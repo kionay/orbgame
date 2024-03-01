@@ -76,6 +76,8 @@ public partial class game : Node2D
 				var pointInBetween = a.Transform.InterpolateWith(b.Transform, 0.5f);
 				var newOrb = MakeOrb(newNodeType);
 				newOrb.Transform = pointInBetween;
+				var gameGlobals = GetNode<Globals>("/root/Globals");
+				gameGlobals.Score += Globals.NodeMergeScore[a.NodeType];
 				AddChild(newOrb);
 				RemoveChild(a);
 				RemoveChild(b);
