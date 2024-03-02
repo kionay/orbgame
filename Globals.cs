@@ -6,6 +6,17 @@ namespace Orbgame.Globals;
 
 public partial class Globals : Node
 {
+    public float Score {
+        get {
+            return _score;
+        }
+        set {
+            _score = value;
+            GetNode<Label>("/root/Game/ScoreGroup/ScoreValue").Text = $"{_score:n0}";
+        }
+
+    }
+    private float _score = 0f;
     public static Dictionary<NodeType, float> NodeScales = new()
     {
         {NodeType.red, 0.324f},
@@ -15,6 +26,17 @@ public partial class Globals : Node
         {NodeType.yellow, 1.473f},
         {NodeType.light_green, 1.797f},
         {NodeType.green, 1.986f},
+    };
+
+    public static Dictionary<NodeType, float> NodeMergeScore = new()
+    {
+        {NodeType.red, 1f},
+        {NodeType.pink, 11f},
+        {NodeType.blue, 21},
+        {NodeType.orange, 32f},
+        {NodeType.yellow, 41f},
+        {NodeType.light_green, 55f},
+        {NodeType.green, 66f},
     };
 
 }
