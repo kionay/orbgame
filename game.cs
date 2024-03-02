@@ -2,6 +2,7 @@ using Godot;
 using Orbgame.Globals;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class game : Node2D
 {
@@ -10,6 +11,7 @@ public partial class game : Node2D
 
 	Orb templateOrb;
 	Timer dropTimer;
+	bool isGameOver = false;
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
@@ -20,7 +22,7 @@ public partial class game : Node2D
 	
 	public override void _Process(double delta)
 	{
-		if (Input.IsActionJustPressed("mouseclick"))
+		if (Input.IsActionJustPressed("mouseclick") && !isGameOver)
 		{
 			if(dropTimer.TimeLeft == 0)
 			{
@@ -32,7 +34,28 @@ public partial class game : Node2D
 				dropTimer.Start(0.2);
 			}
 		}
+		if(Input.IsActionJustPressed("newgame") && isGameOver)
+		{
+			NewGame();
+		}
 		base._Process(delta);
+	}
+
+	private void NewGame()
+	{
+		// delete all orbs
+		var orbs = GetChildren().Where((child) => child is Orb && child.Name != "orb");
+		foreach(Orb orb in orbs.Cast<Orb>())
+		{
+			RemoveChild(orb);
+			orb.QueueFree();
+		}
+		// reset score
+		var gameGlobals = GetNode<Globals>("/root/Globals");
+		gameGlobals.Score = 0;
+		GetNode<Label>("/root/Game/GameOverGroup/GameOverText").Hide();
+		// reset gameover flag
+		isGameOver = false;
 	}
 
 	private Orb MakeOrb(NodeType nodeType)
@@ -66,11 +89,41 @@ public partial class game : Node2D
 		"green"
 	};
 
+	private bool IsCollisionGameOver(Orb a, Orb b)
+	{
+		// the highest orb is the most likely to cause game over
+		var orbHeight = a.GetChild<Sprite2D>(1).Texture.GetHeight();
+		// Y increases downward, so we want the smallest Y value
+		// coordinates start from the center of the orb, 
+		// 	so we need to subtract half of the height of the orb to find the top of it
+		var topOfOrbA = a.Position.Y - (orbHeight / 2);
+		var topOfOrbB = b.Position.Y - (orbHeight / 2);
+		var checkHeight = Math.Min(topOfOrbA, topOfOrbB);
+		var gameOverLine = GetNode<Line2D>("/root/Game/GameOverMarker");
+		var gameOverY = gameOverLine.Points.First().Y;
+		if(gameOverY >= checkHeight)
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	private void HandleMerge(Orb a, Orb b)
 	{	
 		if(!a.IsQueuedForDeletion() && !b.IsQueuedForDeletion())
 		{
-			if(!a.NodeType.IsBiggestNodeType())
+			if(IsCollisionGameOver(a, b))
+			{
+				var orbs = GetChildren().Where((child) => child is Orb && child.Name != "orb");
+				foreach(Orb orb in orbs.Cast<Orb>())
+				{
+					orb.Freeze = true;
+				}
+				GetNode<Label>("/root/Game/GameOverGroup/GameOverText").Show();
+				isGameOver = true;
+			} 
+			else if(!a.NodeType.IsBiggestNodeType())
 			{
 				var newNodeType = a.NodeType + 1;
 				var pointInBetween = a.Transform.InterpolateWith(b.Transform, 0.5f);
@@ -83,8 +136,7 @@ public partial class game : Node2D
 				RemoveChild(b);
 				a.QueueFree();
 				b.QueueFree();
-			}
-
+			}	
 		}
 	}
 }
