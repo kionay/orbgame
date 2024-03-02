@@ -53,7 +53,7 @@ public partial class game : Node2D
 		// reset score
 		var gameGlobals = GetNode<Globals>("/root/Globals");
 		gameGlobals.Score = 0;
-		GetNode<Label>("/root/Game/GameOverGroup/GameOverText").Hide();
+		GetNode<RichTextLabel>("/root/Game/GameOverGroup/GameOverText").Hide();
 		// reset gameover flag
 		isGameOver = false;
 	}
@@ -120,7 +120,7 @@ public partial class game : Node2D
 				{
 					orb.Freeze = true;
 				}
-				GetNode<Label>("/root/Game/GameOverGroup/GameOverText").Show();
+				GetNode<RichTextLabel>("/root/Game/GameOverGroup/GameOverText").Show();
 				isGameOver = true;
 			} 
 			else if(!a.NodeType.IsBiggestNodeType())
