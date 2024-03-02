@@ -27,7 +27,7 @@ radius = 37.4262
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0vq88"]
 
-[sub_resource type="Theme" id="Theme_ytdbp"]
+[sub_resource type="Theme" id="Theme_f67vr"]
 default_font_size = 85
 
 [node name="Game" type="Node2D"]
@@ -149,22 +149,28 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 4.0
-offset_top = -11.0
+offset_top = 2.0
 offset_right = 1368.0
 offset_bottom = 893.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverText" type="Label" parent="GameOverGroup"]
+[node name="GameOverText" type="RichTextLabel" parent="GameOverGroup"]
 visible = false
 z_index = 1
-offset_left = 377.0
-offset_top = 359.0
-offset_right = 932.0
-offset_bottom = 532.0
-theme = SubResource("Theme_ytdbp")
-theme_type_variation = &"HeaderLarge"
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -282.0
+offset_top = -71.5
+offset_right = 282.0
+offset_bottom = 71.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_f67vr")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
 text = "GAME OVER"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
