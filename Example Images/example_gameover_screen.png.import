@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdci5pbwst5n0"
-path="res://.godot/imported/orbbackground.png-531d1a9d1736035594c03af2b2ca1151.ctex"
+uid="uid://dxfkw5opraukj"
+path="res://.godot/imported/example_gameover_screen.png-44d9d7ddc7d266430b7341d4a52ff02c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://orbbackground.png"
-dest_files=["res://.godot/imported/orbbackground.png-531d1a9d1736035594c03af2b2ca1151.ctex"]
+source_file="res://Example Images/example_gameover_screen.png"
+dest_files=["res://.godot/imported/example_gameover_screen.png-44d9d7ddc7d266430b7341d4a52ff02c.ctex"]
 
 [params]
 
