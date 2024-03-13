@@ -12,14 +12,14 @@ public partial class game : Node2D
 	Orb templateOrb;
 	Timer dropTimer;
 	bool isGameOver = false;
-	AudioStream mergeSoundResource;
+	AudioStreamPlayer mergeSoundAudioPlayer;
 
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		MergeSignal += HandleMerge;
 		dropTimer = GetNode<Timer>("DropTimer");
-		mergeSoundResource = ResourceLoader.Load<AudioStream>("res://Sounds/pop.ogg");
+		mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
 		base._Ready();
 	}
 	
@@ -112,16 +112,6 @@ public partial class game : Node2D
 		}
 	}
 
-	private void PlayMergeSound()
-	{
-		var mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
-		if(!mergeSoundAudioPlayer.Playing)
-		{
-			mergeSoundAudioPlayer.Stream = mergeSoundResource;
-			mergeSoundAudioPlayer.Play();
-		}
-	}
-
 	private void HandleMerge(Orb a, Orb b)
 	{	
 		if(!a.IsQueuedForDeletion() && !b.IsQueuedForDeletion())
@@ -144,7 +134,7 @@ public partial class game : Node2D
 				newOrb.Transform = pointInBetween;
 				var gameGlobals = GetNode<Globals>("/root/Globals");
 				gameGlobals.Score += Globals.NodeMergeScore[a.NodeType];
-				PlayMergeSound();
+				mergeSoundAudioPlayer.Play();
 				AddChild(newOrb);
 				RemoveChild(a);
 				RemoveChild(b);

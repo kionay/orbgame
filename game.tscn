@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bc68wfm7yo26s"]
+[gd_scene load_steps=16 format=3 uid="uid://bc68wfm7yo26s"]
 
 [ext_resource type="Script" path="res://game.cs" id="1_aolqd"]
 [ext_resource type="PackedScene" uid="uid://deitymijtv8pf" path="res://background.tscn" id="1_jh7wj"]
 [ext_resource type="Script" path="res://Arrow.cs" id="5_5bekf"]
 [ext_resource type="Texture2D" uid="uid://cwqm421e120jj" path="res://Sprites/red.svg" id="6_1dftd"]
+[ext_resource type="AudioStream" uid="uid://bw70n3mf8away" path="res://Sounds/pop.ogg" id="7_hf2wi"]
 [ext_resource type="Texture2D" uid="uid://d27jwyrtafx3o" path="res://Sprites/arrow.svg" id="11_njxvx"]
 [ext_resource type="Script" path="res://Orb.cs" id="13_t2fvd"]
 
@@ -176,3 +177,5 @@ theme_override_constants/outline_size = 12
 text = "GAME OVER"
 
 [node name="MergeSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_hf2wi")
+max_polyphony = 20
