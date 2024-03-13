@@ -12,11 +12,14 @@ public partial class game : Node2D
 	Orb templateOrb;
 	Timer dropTimer;
 	bool isGameOver = false;
+	AudioStreamPlayer mergeSoundAudioPlayer;
+
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		MergeSignal += HandleMerge;
 		dropTimer = GetNode<Timer>("DropTimer");
+		mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
 		base._Ready();
 	}
 	
@@ -131,6 +134,7 @@ public partial class game : Node2D
 				newOrb.Transform = pointInBetween;
 				var gameGlobals = GetNode<Globals>("/root/Globals");
 				gameGlobals.Score += Globals.NodeMergeScore[a.NodeType];
+				mergeSoundAudioPlayer.Play();
 				AddChild(newOrb);
 				RemoveChild(a);
 				RemoveChild(b);

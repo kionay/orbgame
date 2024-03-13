@@ -15,7 +15,7 @@ I'd also like to mention that I had a lot of issues managing delegated functions
 
 If I make future games I'll more-than-likely try to do them in GDScript, to avoid the exceptions with signal processing and emitting in C# scripts. Also, content online tends to refer to GDScript. Godot is still at the point where C# feels like a second-class citizen compared to GDScript.
 
-![The current state simple shapes and mechanics.](example_board.png)
+![The current state simple shapes and mechanics.](https://github.com/kionay/orbgame/Example%20Images/example_board.png)
 
 I find that it is tempting to add far too much to global autoloaded scripts and letting one file handle too much.
 
@@ -23,5 +23,5 @@ Uses of Godot after this project I should be mindful to allow objects to handle 
 
 Also, there seems like a great amount of potential in organizing global handlers for events, and creating an efficient event network using it could be either a really good or really bad idea for a larger project.
 
-![The current state of GAME OVER.](example_gameover_screen.png)
+![The current state of GAME OVER.](https://github.com/kionay/orbgame/Example%20Images/example_gameover_screen.png)
 
