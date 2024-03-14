@@ -1,10 +1,10 @@
-	using Godot;
+using Godot;
 using Orbgame.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class game : Node2D
+public partial class Game : Node2D
 {
 	[Signal]
 	public delegate void MergeSignalEventHandler(Orb a, Orb b);
