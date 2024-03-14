@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bc68wfm7yo26s"]
+[gd_scene load_steps=22 format=3 uid="uid://bc68wfm7yo26s"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_2f6dk"]
 [ext_resource type="PackedScene" uid="uid://deitymijtv8pf" path="res://background.tscn" id="2_ppm1s"]
@@ -6,7 +6,13 @@
 [ext_resource type="Script" path="res://Arrow.cs" id="4_g4o45"]
 [ext_resource type="Script" path="res://Orb.cs" id="5_ua7oi"]
 [ext_resource type="Texture2D" uid="uid://cwqm421e120jj" path="res://Sprites/red.svg" id="6_wd424"]
-[ext_resource type="AudioStream" uid="uid://bw70n3mf8away" path="res://Sounds/pop.ogg" id="7_5kx1n"]
+[ext_resource type="AudioStream" uid="uid://cxu3k8cmuev4n" path="res://Sounds/pop_C6_red.ogg" id="7_4sa3h"]
+[ext_resource type="AudioStream" uid="uid://bm4e4ntf4k1ak" path="res://Sounds/pop_A5_pink.ogg" id="8_l472e"]
+[ext_resource type="AudioStream" uid="uid://crbh4s1uy821r" path="res://Sounds/pop_F5_blue.ogg" id="9_10o8x"]
+[ext_resource type="AudioStream" uid="uid://dldlqoyixh46w" path="res://Sounds/pop_C5_orange.ogg" id="10_ffruq"]
+[ext_resource type="AudioStream" uid="uid://chccgvwfxpd86" path="res://Sounds/pop_A4_yellow.ogg" id="11_t64xg"]
+[ext_resource type="AudioStream" uid="uid://c6e6ffp4m3ui2" path="res://Sounds/pop_F4_light_green.ogg" id="12_wr6xy"]
+[ext_resource type="AudioStream" uid="uid://bn5btivg0yyc8" path="res://Sounds/pop_C4_green.ogg" id="13_pwwsq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0tet5"]
 
@@ -176,6 +182,32 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 text = "GAME OVER"
 
-[node name="MergeSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_5kx1n")
+[node name="MergeSounds" type="Node" parent="."]
+
+[node name="RedPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("7_4sa3h")
+max_polyphony = 20
+
+[node name="PinkPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("8_l472e")
+max_polyphony = 20
+
+[node name="BluePopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("9_10o8x")
+max_polyphony = 20
+
+[node name="OrangePopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("10_ffruq")
+max_polyphony = 20
+
+[node name="YellowPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("11_t64xg")
+max_polyphony = 20
+
+[node name="LightGreenPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("12_wr6xy")
+max_polyphony = 20
+
+[node name="GreenPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
+stream = ExtResource("13_pwwsq")
 max_polyphony = 20

@@ -12,7 +12,6 @@ public partial class Game : Node2D
 	Orb templateOrb;
 	Timer dropTimer;
 	bool isGameOver = false;
-	AudioStreamPlayer mergeSoundAudioPlayer;
 	Random newBallRNG = new();
 	Globals globals;
 
@@ -29,7 +28,6 @@ public partial class Game : Node2D
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		MergeSignal += HandleMerge;
 		dropTimer = GetNode<Timer>("DropTimer");
-		mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
 		base._Ready();
 	}
 
@@ -131,8 +129,8 @@ public partial class Game : Node2D
 
 	private void PlayOrbMergeSound(NodeType mergeNodeType)
 	{
-		mergeSoundAudioPlayer.PitchScale = globals.NodeConfiguration[mergeNodeType].MergePitchScale;
-		mergeSoundAudioPlayer.Play();
+		var player = GetNode<AudioStreamPlayer>(globals.NodeConfiguration[mergeNodeType].MergeSoundResourcePath);
+		player.Play();
 	}
 
 	private void HandleMerge(Orb a, Orb b)
