@@ -1,4 +1,4 @@
-using Godot;
+	using Godot;
 using Orbgame.Globals;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,15 @@ public partial class game : Node2D
 	Timer dropTimer;
 	bool isGameOver = false;
 	AudioStreamPlayer mergeSoundAudioPlayer;
+	Random newBallRNG = new();
+
+	Dictionary<NodeType, float> spawnableOrbChances = new()
+	{
+		{ NodeType.red, 0.70f },
+		{ NodeType.pink, 0.20f },
+		{ NodeType.blue, 0.03f },
+		
+	};
 
 	public override void _Ready()
 	{
@@ -22,6 +31,14 @@ public partial class game : Node2D
 		mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
 		base._Ready();
 	}
+
+	public NodeType GetRandomOrbType()
+	{
+		var weightSum = spawnableOrbChances.Sum((orbChance) => orbChance.Value);
+		var rng = newBallRNG.NextDouble() * weightSum;
+		var selection = spawnableOrbChances.FirstOrDefault(orbChance => rng >= (weightSum -= orbChance.Value));
+		return selection.Key;
+	}
 	
 	public override void _Process(double delta)
 	{
@@ -29,7 +46,7 @@ public partial class game : Node2D
 		{
 			if(dropTimer.TimeLeft == 0)
 			{
-				var spawnedOrb = MakeOrb(NodeType.red);
+				var spawnedOrb = MakeOrb(GetRandomOrbType());
 				Sprite2D arrow = GetNode<Sprite2D>("Arrow");
 				spawnedOrb.Position = new Vector2(arrow.Position.X, arrow.Position.Y + arrow.Texture.GetHeight());
 				AddChild(spawnedOrb);
