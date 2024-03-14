@@ -24,7 +24,7 @@ public partial class Orb : RigidBody2D
 			return;
 		if(body.NodeType == this.NodeType)
 		{
-			GetParent()?.EmitSignal(game.SignalName.MergeSignal, this, body);
+			GetParent()?.EmitSignal(Game.SignalName.MergeSignal, this, body);
 		}
 	}
 }

@@ -21,7 +21,6 @@ public partial class Game : Node2D
 		{ NodeType.red, 0.70f },
 		{ NodeType.pink, 0.20f },
 		{ NodeType.blue, 0.03f },
-		
 	};
 
 	public override void _Ready()
