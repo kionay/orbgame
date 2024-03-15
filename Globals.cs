@@ -1,11 +1,28 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Linq;
 
 namespace Orbgame.Globals;
 
 public partial class Globals : Node
 {
+    public Dictionary<NodeType, NodeData> NodeConfiguration = new();
+    public override void _Ready()
+    {
+        using var file = FileAccess.Open("res://Orb.config", FileAccess.ModeFlags.Read);
+        var configVariant = Json.ParseString(file.GetAsText());
+        file.Close();
+        var configVariantTable = configVariant.AsGodotDictionary();
+        foreach(var item in configVariantTable)
+        {
+            var nodeTypeKey = item.Key.AsNodeType();
+            var nodeDataValue = item.Value.AsNodeData();
+            NodeConfiguration[nodeTypeKey] = nodeDataValue;
+        }
+
+        base._Ready();
+    }
     public float Score {
         get {
             return _score;
@@ -17,27 +34,6 @@ public partial class Globals : Node
 
     }
     private float _score = 0f;
-    public static Dictionary<NodeType, float> NodeScales = new()
-    {
-        {NodeType.red, 0.324f},
-        {NodeType.pink, 0.554f},
-        {NodeType.blue, 0.797f},
-        {NodeType.orange, 1.000f},
-        {NodeType.yellow, 1.473f},
-        {NodeType.light_green, 1.797f},
-        {NodeType.green, 1.986f},
-    };
-
-    public static Dictionary<NodeType, float> NodeMergeScore = new()
-    {
-        {NodeType.red, 1f},
-        {NodeType.pink, 11f},
-        {NodeType.blue, 21},
-        {NodeType.orange, 32f},
-        {NodeType.yellow, 41f},
-        {NodeType.light_green, 55f},
-        {NodeType.green, 66f},
-    };
 
 }
 
@@ -57,7 +53,8 @@ public static class GlobalExtensions
     public static NodeType ToNodeType(this string nodeName) => Enum.Parse<NodeType>(nodeName);
 
     public static string ToString(this NodeType nodeType) => Enum.GetName(nodeType);
+    public static NodeType AsNodeType(this Variant variant) => variant.AsString().ToNodeType();
+    public static NodeData AsNodeData(this Variant variant) => new(variant.AsGodotDictionary());
     public static bool IsBiggestNodeType(this NodeType nodeType) => nodeType ==  Enum.GetValues<NodeType>()[^1];
-
     public static CompressedTexture2D GetTexture(this NodeType nodeType) => ResourceLoader.Load<CompressedTexture2D>($"res://Sprites/{nodeType}.svg");
 }

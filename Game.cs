@@ -1,10 +1,10 @@
-	using Godot;
+using Godot;
 using Orbgame.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class game : Node2D
+public partial class Game : Node2D
 {
 	[Signal]
 	public delegate void MergeSignalEventHandler(Orb a, Orb b);
@@ -12,23 +12,22 @@ public partial class game : Node2D
 	Orb templateOrb;
 	Timer dropTimer;
 	bool isGameOver = false;
-	AudioStreamPlayer mergeSoundAudioPlayer;
 	Random newBallRNG = new();
+	Globals globals;
 
 	Dictionary<NodeType, float> spawnableOrbChances = new()
 	{
 		{ NodeType.red, 0.70f },
 		{ NodeType.pink, 0.20f },
 		{ NodeType.blue, 0.03f },
-		
 	};
 
 	public override void _Ready()
 	{
+		globals = GetNode<Globals>("/root/Globals");
 		Input.MouseMode = Input.MouseModeEnum.Hidden;
 		MergeSignal += HandleMerge;
 		dropTimer = GetNode<Timer>("DropTimer");
-		mergeSoundAudioPlayer = GetNode<AudioStreamPlayer>("MergeSoundPlayer");
 		base._Ready();
 	}
 
@@ -71,8 +70,7 @@ public partial class game : Node2D
 			orb.QueueFree();
 		}
 		// reset score
-		var gameGlobals = GetNode<Globals>("/root/Globals");
-		gameGlobals.Score = 0;
+		globals.Score = 0;
 		GetNode<RichTextLabel>("/root/Game/GameOverGroup/GameOverText").Hide();
 		// reset gameover flag
 		isGameOver = false;
@@ -89,7 +87,7 @@ public partial class game : Node2D
 		spawnedOrb.SetCollisionLayerValue(2,  true);
 		spawnedOrb.SetCollisionMaskValue(1, false);
 		spawnedOrb.SetCollisionMaskValue(2, true);
-		var nodeScaleFactor = Globals.NodeScales[nodeType];
+		var nodeScaleFactor = globals.NodeConfiguration[nodeType].Scale;
 		var nodeScaleVector = new Vector2(nodeScaleFactor, nodeScaleFactor);
 		spawnedOrb.GetChild<CollisionShape2D>(0).Scale = nodeScaleVector;
 		var nodeSprite = spawnedOrb.GetChild<Sprite2D>(1);
@@ -129,6 +127,12 @@ public partial class game : Node2D
 		}
 	}
 
+	private void PlayOrbMergeSound(NodeType mergeNodeType)
+	{
+		var player = GetNode<AudioStreamPlayer>(globals.NodeConfiguration[mergeNodeType].MergeSoundResourcePath);
+		player.Play();
+	}
+
 	private void HandleMerge(Orb a, Orb b)
 	{	
 		if(!a.IsQueuedForDeletion() && !b.IsQueuedForDeletion())
@@ -149,9 +153,8 @@ public partial class game : Node2D
 				var pointInBetween = a.Transform.InterpolateWith(b.Transform, 0.5f);
 				var newOrb = MakeOrb(newNodeType);
 				newOrb.Transform = pointInBetween;
-				var gameGlobals = GetNode<Globals>("/root/Globals");
-				gameGlobals.Score += Globals.NodeMergeScore[a.NodeType];
-				mergeSoundAudioPlayer.Play();
+				globals.Score += globals.NodeConfiguration[a.NodeType].MergeScore;
+				PlayOrbMergeSound(newNodeType);
 				AddChild(newOrb);
 				RemoveChild(a);
 				RemoveChild(b);
