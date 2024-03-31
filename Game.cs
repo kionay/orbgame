@@ -41,15 +41,19 @@ public partial class Game : Node2D
 	
 	public override void _Process(double delta)
 	{
+		Arrow arrow = GetNode<Arrow>("Arrow");
+		if(dropTimer.TimeLeft == 0)
+		{
+			if(!arrow.heldOrb.Visible)
+			{
+				SpawnNewHeldOrb();
+			}
+		}
 		if (Input.IsActionJustPressed("mouseclick") && !isGameOver)
 		{
-			if(dropTimer.TimeLeft == 0)
+			if(arrow.heldOrb.Visible)
 			{
-				var spawnedOrb = MakeOrb(GetRandomOrbType());
-				Sprite2D arrow = GetNode<Sprite2D>("Arrow");
-				spawnedOrb.Position = new Vector2(arrow.Position.X, arrow.Position.Y + arrow.Texture.GetHeight());
-				AddChild(spawnedOrb);
-				spawnedOrb.ApplyImpulse(Vector2.Down * 1000, this.Position);
+				SwapHeldOrbForRealOrb();
 				dropTimer.Start(0.2);
 			}
 		}
@@ -58,6 +62,31 @@ public partial class Game : Node2D
 			NewGame();
 		}
 		base._Process(delta);
+	}
+
+	public void SwapHeldOrbForRealOrb()
+	{
+		StaticBody2D heldOrb = GetNode<StaticBody2D>("HeldOrb");
+		var heldOrbType = heldOrb.GetMeta("NodeType").AsNodeType();
+		var spawnedOrb = MakeOrb(heldOrbType);
+		spawnedOrb.ApplyImpulse(Vector2.Down * 1000, this.Position);
+		spawnedOrb.Show();
+		spawnedOrb.Position = heldOrb.Position;
+		AddChild(spawnedOrb);
+		heldOrb.Hide();
+	}
+
+	public void SpawnNewHeldOrb()
+	{
+		StaticBody2D heldOrb = GetNode<StaticBody2D>("HeldOrb");
+		var heldOrbSprite = heldOrb.GetChild<Sprite2D>(1);
+		var orbType = GetRandomOrbType();
+		heldOrb.SetMeta("NodeType", orbType.ToString());
+		var nodeScaleFactor = globals.NodeConfiguration[orbType].Scale;
+		var nodeScaleVector = new Vector2(nodeScaleFactor, nodeScaleFactor);
+		heldOrbSprite.Texture = orbType.GetTexture();
+		heldOrbSprite.Scale = nodeScaleVector;
+		heldOrb.Show();
 	}
 
 	private void NewGame()
@@ -78,7 +107,7 @@ public partial class Game : Node2D
 
 	private Orb MakeOrb(NodeType nodeType)
 	{
-		var templateOrb = GetNode<RigidBody2D>("orb");
+		var templateOrb = GetNode<RigidBody2D>("TemplateOrb");
 		Orb spawnedOrb = templateOrb.Duplicate(6) as Orb;
 		spawnedOrb.NodeType = nodeType;
 		spawnedOrb.Visible = true;

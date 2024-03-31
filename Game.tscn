@@ -88,9 +88,9 @@ scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_et7kd")
 script = ExtResource("4_g4o45")
 
-[node name="orb" type="RigidBody2D" parent="."]
+[node name="TemplateOrb" type="RigidBody2D" parent="."]
 visible = false
-position = Vector2(52, 162.3)
+position = Vector2(-87, 184)
 physics_material_override = SubResource("PhysicsMaterial_nci2k")
 gravity_scale = 0.0
 continuous_cd = 1
@@ -98,11 +98,11 @@ max_contacts_reported = 5
 contact_monitor = true
 script = ExtResource("5_ua7oi")
 
-[node name="Collision" type="CollisionShape2D" parent="orb"]
+[node name="Collision" type="CollisionShape2D" parent="TemplateOrb"]
 scale = Vector2(0.324, 0.324)
 shape = SubResource("CircleShape2D_vu5gg")
 
-[node name="Sprite" type="Sprite2D" parent="orb"]
+[node name="Sprite" type="Sprite2D" parent="TemplateOrb"]
 material = SubResource("CanvasItemMaterial_0vq88")
 scale = Vector2(0.324, 0.324)
 texture = ExtResource("6_wd424")
@@ -211,3 +211,17 @@ max_polyphony = 20
 [node name="GreenPopPlayer" type="AudioStreamPlayer" parent="MergeSounds"]
 stream = ExtResource("13_pwwsq")
 max_polyphony = 20
+
+[node name="HeldOrb" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(-90, 102)
+metadata/NodeType = "red"
+
+[node name="Collision" type="CollisionShape2D" parent="HeldOrb"]
+scale = Vector2(0.324, 0.324)
+shape = SubResource("CircleShape2D_vu5gg")
+
+[node name="Sprite" type="Sprite2D" parent="HeldOrb"]
+material = SubResource("CanvasItemMaterial_0vq88")
+scale = Vector2(0.324, 0.324)
+texture = ExtResource("6_wd424")
