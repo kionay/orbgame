@@ -41,15 +41,25 @@ public partial class Game : Node2D
 	
 	public override void _Process(double delta)
 	{
-		if (Input.IsActionJustPressed("mouseclick") && !isGameOver)
+		Arrow arrow = GetNode<Arrow>("Arrow");
+		if(dropTimer.TimeLeft == 0)
 		{
-			if(dropTimer.TimeLeft == 0)
+			if(arrow.heldOrb == null)
 			{
 				var spawnedOrb = MakeOrb(GetRandomOrbType());
-				Sprite2D arrow = GetNode<Sprite2D>("Arrow");
-				spawnedOrb.Position = new Vector2(arrow.Position.X, arrow.Position.Y + arrow.Texture.GetHeight());
+				spawnedOrb.GravityScale = 0;
+				arrow.heldOrb = spawnedOrb;
+				//spawnedOrb.Position = new Vector2(arrow.Position.X, arrow.Position.Y + arrow.Texture.GetHeight());
+				arrow.MoveOrb();
 				AddChild(spawnedOrb);
-				spawnedOrb.ApplyImpulse(Vector2.Down * 1000, this.Position);
+			}
+		}
+		if (Input.IsActionJustPressed("mouseclick") && !isGameOver)
+		{
+			if(arrow.heldOrb != null)
+			{
+				DropOrb(arrow.heldOrb);
+				arrow.heldOrb = null;
 				dropTimer.Start(0.2);
 			}
 		}
@@ -74,6 +84,12 @@ public partial class Game : Node2D
 		GetNode<RichTextLabel>("/root/Game/GameOverGroup/GameOverText").Hide();
 		// reset gameover flag
 		isGameOver = false;
+	}
+
+	private void DropOrb(Orb orb)
+	{
+		orb.GravityScale = 1;
+		orb.ApplyImpulse(Vector2.Down * 1000, this.Position);
 	}
 
 	private Orb MakeOrb(NodeType nodeType)
